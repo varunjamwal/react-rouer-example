@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
 
 import Posts from '../../containers/Posts/Posts';
-import NewPost from '../NewPost/NewPost';
+//import NewPost from '../NewPost/NewPost';
 //import Axios from 'axios' 
 import './Blog.css';
+import asyncComponent from  '../../components/hoc/asyncComponent'
 import {Route,NavLink,Switch,Redirect} from 'react-router-dom';
 
+const AsyncNewPost = asyncComponent(() => {
+    return import('../NewPost/NewPost');        //Lazy-Loading or async load
+});
 
 class Blog extends Component {
  
@@ -31,7 +35,7 @@ class Blog extends Component {
                {/* <Route path  = "/" exact render = {() => <h1>Home</h1>}/> */}
               
                 <Switch> 
-                    <Route path ="/new-post"  component = {NewPost} />
+                    <Route path ="/new-post"  component = {AsyncNewPost} />
                 <Route path ="/posts"  component = {Posts} />
                         <Redirect from="/" to= "/posts" />    {/*if used outside switch only to will apply*/}
                </Switch>
